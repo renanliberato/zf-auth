@@ -61,4 +61,35 @@ return array(
             'auth' => __DIR__ . '/../view',
         ),
     ),
+    'acl' => array(
+        'roles' => array(
+            'guest' => null,
+            'user'  => 'guest',
+        ),
+        'resources' => array(
+            'Auth\Controller\Auth.index',
+            'Auth\Controller\Auth.login',
+            'Auth\Controller\Auth.logout',
+        ),
+        'privilege' => array(
+            'guest' => array(
+                'allow' => array(
+                    'Auth\Controller\Auth.index',
+                    'Auth\Controller\Auth.login',
+                    'Auth\Controller\Auth.logout',
+                ),
+            ),
+        ),
+    ),
+    'db' => array(
+        'adapters' => array(
+            'dbUsers' => array(
+                'driver' => 'Pdo',
+                'dsn' => 'mysql:dbname=auth;host=localhost',
+                'driver_options' => array(
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'',
+                ),
+            ),
+        ),
+    ),
 );
