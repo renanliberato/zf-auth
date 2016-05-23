@@ -1,2 +1,12 @@
 # zf2-auth
-Zend Framework 2 Auth module.
+
+##Description
+<p>This is an Authentication module create on top of Zend Framework 2.</p>
+<p>It's objective is to integrate all configuration dependencies inside the module, not needing to do aditional configurations inside global.php or Application's module.config.</p>
+
+##External Resources
+###[Bootstrap 3](http://getbootstrap.com/getting-started/#download)
+
+##How to install
+
+- git clone https://github.com/renanliberato/zf2-auth.git
