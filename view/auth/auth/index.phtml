@@ -1,0 +1,15 @@
+<div class='row'>
+    <div class='col-sm-4 col-sm-offset-4'>
+        <?= $this->partial('partials/messages/flashMessenger.phtml') ?>
+    </div>
+</div>
+<div class='row'>
+    <div id="login" class="col-sm-4 col-sm-offset-4 jumbotron">
+        <?= $this->form()->openTag($form); ?>
+        <?= $this->formRow($form->get('email')); ?>
+        <?= $this->formRow($form->get('password')); ?>
+        <?= $this->formRow($form->get('submit')); ?>
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>
+
