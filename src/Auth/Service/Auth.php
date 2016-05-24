@@ -52,7 +52,7 @@ class Auth extends Service
         return true;
     }
 
-    public function authorize($moduleName, $controllerName, $actionName)
+    public function authorize($controllerName, $actionName)
     {
         $auth = new AuthenticationService();
         $role = 'guest';

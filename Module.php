@@ -30,7 +30,7 @@ class Module
 
         $authService = $di->get('Auth\Service\Auth');
 
-        if (!$authService->authorize($moduleName, $controllerName, $actionName)) {
+        if (!$authService->authorize($controllerName, $actionName)) {
 
             $controller = $event->getTarget();
             $controller->flashMessenger()->addErrorMessage('Acesso não autorizado');
