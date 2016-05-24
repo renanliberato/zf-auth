@@ -52,7 +52,7 @@ class AuthController extends ActionController
     public function logoutAction()
     {
         $service = $this->getService('Auth\Service\Auth');
-        $auth = $service->logout();
+        $service->logout();
 
         return $this->redirect()->toUrl('/');
     }
