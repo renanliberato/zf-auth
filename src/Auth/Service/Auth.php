@@ -5,15 +5,40 @@ namespace Auth\Service;
 use Core\Service\Service;
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
-use Zend\Db\Sql\Select;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class Auth extends Service
+class Auth implements ServiceManagerAwareInterface
 {
     private $dbAdapter;
+
+    /**
+     * @var ServiceManager
+     */
+    protected $serviceManager;
 
     public function __construct($dbAdapter = null)
     {
         $this->dbAdapter = $dbAdapter;
+    }
+
+    /**
+     * @param ServiceManager $serviceManager
+     */
+    public function setServiceManager(ServiceManager $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+        //return $this;
+    }
+
+    /**
+     * Retrieve serviceManager instance
+     *
+     * @return ServiceLocatorInterface
+     */
+    public function getServiceManager()
+    {
+        return $this->serviceManager;
     }
 
     public function authenticate($params)
