@@ -10,3 +10,17 @@
 ##How to install
 
 - git clone https://github.com/renanliberato/zf2-auth.git
+
+###global.php
+Implementation to use more than one database.
+```php
+'service_manager' => array(
+    'factories' => array(
+        'Zend\Db\Adapter\Adapter'
+                => 'Zend\Db\Adapter\AdapterServiceFactory',
+    ),
+    'abstract_factories' => array(
+        'Zend\Db\Adapter\AdapterAbstractServiceFactory',
+    ),
+),
+```
