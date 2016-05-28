@@ -10,13 +10,25 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class Auth implements ServiceManagerAwareInterface
 {
+    /**
+     * Auth database adapter.
+     * 
+     * @var \Zend\Db\Adapter\Adapter
+     */
     private $dbAdapter;
 
     /**
+     * Allow Auth class to work with services.
+     * 
      * @var ServiceManager
      */
     protected $serviceManager;
 
+    /**
+     * Initialize Auth database adapter.
+     * 
+     * @param \Zend\Db\Adapter\Adapter $dbAdapter
+     */
     public function __construct($dbAdapter = null)
     {
         $this->dbAdapter = $dbAdapter;
@@ -41,6 +53,13 @@ class Auth implements ServiceManagerAwareInterface
         return $this->serviceManager;
     }
 
+    /**
+     * Authenticate the user in the database and
+     * add user information to the Session
+     * 
+     * @param $params
+     * @return bool
+     */
     public function authenticate($params)
     {
         //to change
@@ -68,6 +87,11 @@ class Auth implements ServiceManagerAwareInterface
         return true;
     }
 
+    /**
+     * Destroy session user information.
+     * 
+     * @return bool
+     */
     public function logout()
     {
         $auth = new AuthenticationService();
@@ -78,6 +102,13 @@ class Auth implements ServiceManagerAwareInterface
         return true;
     }
 
+    /**
+     * Method responsible to authorize the user using the route and session information.
+     * 
+     * @param $controllerName
+     * @param $actionName
+     * @return bool
+     */
     public function authorize($controllerName, $actionName)
     {
         $auth = new AuthenticationService();

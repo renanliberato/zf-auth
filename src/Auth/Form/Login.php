@@ -6,6 +6,9 @@ use Zend\Form\Form;
 
 class Login extends Form
 {
+    /**
+     * Login constructor.
+     */
     public function __construct()
     {
         parent::__construct('login');

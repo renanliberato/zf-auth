@@ -8,6 +8,11 @@ use Auth\Form\Login;
 
 class AuthController extends AbstractActionController
 {
+    /**
+     * Method responsible to render login page.
+     * 
+     * @return ViewModel
+     */
     public function indexAction()
     {
         $form = new Login();
@@ -16,11 +21,21 @@ class AuthController extends AbstractActionController
         ));
     }
 
+    /**
+     * View rendered when a user try to access a not authorized page.
+     *
+     * @return ViewModel
+     */
     public function errorAction()
     {
         return new ViewModel();
     }
 
+    /**
+     * Authenticate the user and redirect to the main page.
+     *
+     * @return \Zend\Http\Response
+     */
     public function loginAction()
     {
         $request = $this->getRequest();
@@ -49,6 +64,11 @@ class AuthController extends AbstractActionController
         return  $this->redirect()->toUrl('/');
     }
 
+    /**
+     * Logout the user and redirect to the main page.
+     *
+     * @return \Zend\Http\Response
+     */
     public function logoutAction()
     {
         $service = $this->getServiceLocator()->get('Auth\Service\Auth');

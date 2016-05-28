@@ -9,22 +9,49 @@ use Zend\InputFilter\InputFilterInterface;
 
 class User implements InputFilterAwareInterface
 {
+    /**
+     * @var string
+     */
     protected $tableName = 'user';
 
+    /**
+     * @var int
+     */
     protected $id;
 
+    /**
+     * @var string
+     */
     protected $username;
 
+    /**
+     * @var string
+     */
     protected $password;
 
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var int
+     */
     protected $valid;
 
+    /**
+     * @var string
+     */
     protected $role;
 
+    /**
+     * @var InputFilter
+     */
     protected $inputFilter;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         if (!$this->inputFilter) {
@@ -102,10 +129,19 @@ class User implements InputFilterAwareInterface
         }
     }
 
+    /**
+     * Set the inputFilter described into __construct method.
+     * 
+     * @param InputFilterInterface $inputFilter
+     */
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         $this->inputFilter = $inputFilter;
     }
+
+    /**
+     * @return InputFilter
+     */
     public function getInputFilter()
     {
         return $this->inputFilter;
