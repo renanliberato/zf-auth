@@ -15,7 +15,7 @@ return array(
                 return new Zend\Session\Container('application');
             },
             'Auth\Service\Auth' => function($sm) {
-                $dbAdapter = $sm->get('dbUsers');
+                $dbAdapter = $sm->get('dbAuth');
                 return new Auth\Service\Auth($dbAdapter);
             },
         ),
@@ -89,7 +89,7 @@ return array(
     ),
     'db' => array(
         'adapters' => array(
-            'dbUsers' => array(
+            'dbAuth' => array(
                 'driver' => 'Pdo',
                 'dsn' => 'mysql:dbname=auth;host=localhost',
                 'driver_options' => array(
