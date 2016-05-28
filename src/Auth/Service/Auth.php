@@ -18,6 +18,7 @@ class Auth extends Service
 
     public function authenticate($params)
     {
+        //to change
         $password = md5($params['password']);
         
         $auth = new AuthenticationService();
@@ -36,7 +37,7 @@ class Auth extends Service
             return false;
         }
 
-        $session = $this->getServiceManager()->get('Session');
+        $session = $this->getServiceManager()->get('Auth\Session');
         $session->offsetSet('user', $authAdapter->getResultRowObject(null,array('password')));
 
         return true;
@@ -45,7 +46,7 @@ class Auth extends Service
     public function logout()
     {
         $auth = new AuthenticationService();
-        $session = $this->getServiceManager()->get('Session');
+        $session = $this->getServiceManager()->get('Auth\Session');
         $session->offsetUnset('user');
         $auth->clearIdentity();
 
@@ -57,7 +58,7 @@ class Auth extends Service
         $auth = new AuthenticationService();
         $role = 'guest';
         if ($auth->hasIdentity()) {
-            $session = $this->getServiceManager()->get('Session');
+            $session = $this->getServiceManager()->get('Auth\Session');
             $user = $session->offsetGet('user');
             $role = $user->role;
         }
