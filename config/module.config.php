@@ -3,7 +3,6 @@
 return array(
     'controllers' => array( //add module controllers
         'invokables' => array(
-            'Auth\Controller\Index' => 'Auth\Controller\IndexController',
             'Auth\Controller\Auth' => 'Auth\Controller\AuthController',
         ),
     ),
