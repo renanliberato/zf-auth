@@ -6,9 +6,8 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Core\Model\Entity;
 
-class User extends Entity
+class User implements InputFilterAwareInterface
 {
     protected $tableName = 'user';
 
@@ -24,11 +23,13 @@ class User extends Entity
 
     protected $role;
 
-    public function getInputFilter()
+    protected $inputFilter;
+
+    public function __construct()
     {
-        if(!$this->inputFilter) {
+        if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
-            $factory = new InputFactory();
+            $factory     = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'id',
@@ -97,9 +98,16 @@ class User extends Entity
                     ),
                 ),
             )));
-            $this->inputFilter = $inputFilter;
+            $this->setInputFilter($inputFilter);
         }
+    }
 
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        $this->inputFilter = $inputFilter;
+    }
+    public function getInputFilter()
+    {
         return $this->inputFilter;
     }
 }
