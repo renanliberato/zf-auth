@@ -3,7 +3,7 @@
 namespace Auth\Controller;
 
 use Zend\View\Model\ViewModel;
-use Core\Controller\ActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * Controlador que gerencia os posts
@@ -12,7 +12,7 @@ use Core\Controller\ActionController;
  * @package Controller
  * @author  Elton Minetto<eminetto@coderockr.com>
  */
-class IndexController extends ActionController
+class IndexController extends AbstractActionController
 {
     /**
      * Mostra os posts cadastrados
