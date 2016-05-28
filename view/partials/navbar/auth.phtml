@@ -1,0 +1,10 @@
+<?php $user = $this->authSession()->user;?>
+<ul class="nav navbar-nav navbar-right">
+    <?php if(!($user)): ?>
+        <li>
+            <a href="/auth/auth">Login &nbsp;<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+        </li>
+    <?php else: ?>
+        <li><a href="/auth/auth/logout">Logout &nbsp;<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+    <?php endif; ?>
+</ul>
