@@ -9,7 +9,7 @@
 
 ##How to install
 
-- git clone https://github.com/renanliberato/zf2-auth.git
+- `git clone https://github.com/renanliberato/zf2-auth.git`
 
 ###global.php
 Implementation to use more than one database.
@@ -24,3 +24,15 @@ Implementation to use more than one database.
     ),
 ),
 ```
+
+##Components
+
+###Auth\Controller\AuthController
+
+###Auth\Service\Auth
+
+
+###Partials
+
+####Login/Logout navbar-right partial
+`<?=$this->partial('partials/navbar/auth.phtml')?>`
