@@ -3,10 +3,10 @@
 namespace Auth\Controller;
 
 use Zend\View\Model\ViewModel;
-use Core\Controller\ActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Form\Login;
 
-class AuthController extends ActionController
+class AuthController extends AbstractActionController
 {
     public function indexAction()
     {
@@ -32,7 +32,7 @@ class AuthController extends ActionController
         }
 
         $data = $request->getPost();
-        $service = $this->getService('Auth\Service\Auth');
+        $service = $this->getServiceLocator()->get('Auth\Service\Auth');
         $auth = $service->authenticate(
             array(
                 'email' => $data['email'],
@@ -51,7 +51,7 @@ class AuthController extends ActionController
 
     public function logoutAction()
     {
-        $service = $this->getService('Auth\Service\Auth');
+        $service = $this->getServiceLocator()->get('Auth\Service\Auth');
         $service->logout();
 
         return $this->redirect()->toUrl('/');
