@@ -9,8 +9,11 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
+            'Auth\Session' => function($sm) {
+                return new Zend\Session\Container('Auth');
+            },
             'Session' => function($sm) {
-                return new Zend\Session\Container('Schoolcandy');
+                return new Zend\Session\Container('application');
             },
             'Auth\Service\Auth' => function($sm) {
                 $dbAdapter = $sm->get('dbUsers');
@@ -18,7 +21,11 @@ return array(
             },
         ),
     ),
-
+    'view_helpers' => array(
+        'invokables' => array(
+            'authSession' => 'Auth\View\Helper\Session',
+        ),
+    ),
     'router' => array(
         'routes' => array(
             'auth' => array(
