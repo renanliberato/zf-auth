@@ -4,6 +4,13 @@ namespace Auth\Form;
 
 use Zend\Form\Form;
 
+/**
+ * DESCRIPTION
+ * PHP Version: 7.0.6
+ * Class Login
+ * @package Auth\Form
+ * @author Renan Liberato <renan.libsantana@gmail.com>
+ */
 class Login extends Form
 {
     /**

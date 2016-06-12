@@ -7,6 +7,13 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
+/**
+ * DESCRIPTION
+ * PHP Version: 7.0.6
+ * Class User
+ * @package Auth\Model
+ * @author Renan Liberato <renan.libsantana@gmail.com>
+ */
 class User implements InputFilterAwareInterface
 {
     /**
@@ -50,9 +57,19 @@ class User implements InputFilterAwareInterface
     protected $inputFilter;
 
     /**
-     * User constructor.
+     * Set the inputFilter described into __construct method.
+     *
+     * @param InputFilterInterface $inputFilter
      */
-    public function __construct()
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        $this->inputFilter = $inputFilter;
+    }
+
+    /**
+     * @return InputFilter
+     */
+    public function getInputFilter()
     {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
@@ -127,23 +144,35 @@ class User implements InputFilterAwareInterface
             )));
             $this->setInputFilter($inputFilter);
         }
-    }
-
-    /**
-     * Set the inputFilter described into __construct method.
-     * 
-     * @param InputFilterInterface $inputFilter
-     */
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        $this->inputFilter = $inputFilter;
-    }
-
-    /**
-     * @return InputFilter
-     */
-    public function getInputFilter()
-    {
+        
         return $this->inputFilter;
+    }
+
+
+
+    /**
+     * Set all entity data based in an array with data
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData($data)
+    {
+        foreach($data as $key => $value) {
+            $this->__set($key, $value);
+        }
+    }
+
+    /**
+     * Return all entity data in array format
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        $data = get_object_vars($this);
+        unset($data['inputFilter']);
+        unset($data['tableName']);
+        return array_filter($data);
     }
 }

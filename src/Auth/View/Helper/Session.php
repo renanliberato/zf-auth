@@ -19,6 +19,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class Session extends AbstractHelper implements ServiceLocatorAwareInterface
 {
+    protected $serviceLocator;
+
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;

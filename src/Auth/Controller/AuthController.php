@@ -2,12 +2,35 @@
 
 namespace Auth\Controller;
 
+use Auth\Service\Auth\Auth as Authenticator;
+use Auth\Form\Login;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
-use Auth\Form\Login;
 
+/**
+ * DESCRIPTION
+ * PHP Version: 7.0.6
+ * Class AuthController
+ * @package Auth\Controller
+ * @author Renan Liberato <renan.libsantana@gmail.com>
+ */
 class AuthController extends AbstractActionController
 {
+    /**
+     * @var Authenticator
+     */
+    protected $authenticator;
+
+    /**
+     * AuthController constructor.
+     *
+     * @param Authenticator $authService
+     */
+    public function __construct(Authenticator $authenticator)
+    {
+        $this->authenticator = $authenticator;
+    }
+
     /**
      * Method responsible to render login page.
      * 
@@ -16,6 +39,7 @@ class AuthController extends AbstractActionController
     public function indexAction()
     {
         $form = new Login();
+
         return new ViewModel(array(
             'form' => $form
         ));
@@ -47,8 +71,7 @@ class AuthController extends AbstractActionController
         }
 
         $data = $request->getPost();
-        $service = $this->getServiceLocator()->get('Auth\Service\Auth');
-        $auth = $service->authenticate(
+        $auth = $this->authenticator->authenticate(
             array(
                 'email' => $data['email'],
                 'password' => $data['password'],
@@ -71,8 +94,7 @@ class AuthController extends AbstractActionController
      */
     public function logoutAction()
     {
-        $service = $this->getServiceLocator()->get('Auth\Service\Auth');
-        $service->logout();
+        $this->authenticator->logout();
 
         return $this->redirect()->toUrl('/');
     }

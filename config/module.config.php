@@ -2,22 +2,25 @@
 
 return array(
     'controllers' => array( //add module controllers
-        'invokables' => array(
-            'Auth\Controller\Auth' => 'Auth\Controller\AuthController',
+        'factories' => array(
+            'Auth\Controller\Auth' => 'Auth\Controller\Factory\AuthControllerFactory',
+            'Auth\Controller\User' => 'Auth\Controller\Factory\UserControllerFactory',
         ),
     ),
     'service_manager' => array(
         'factories' => array(
+            'Zend\Db\Adapter\Adapter'
+            => 'Zend\Db\Adapter\AdapterServiceFactory',
             'Auth\Session' => function($sm) {
                 return new Zend\Session\Container('Auth');
             },
-            'Session' => function($sm) {
-                return new Zend\Session\Container('application');
-            },
-            'Auth\Service\Auth' => function($sm) {
-                $dbAdapter = $sm->get('dbAuth');
-                return new Auth\Service\Auth($dbAdapter);
-            },
+            'Auth\Service\Auth\Auth'   => 'Auth\Service\Auth\Factory\AuthFactory',
+            'Auth\Service\User\Search' => 'Auth\Service\User\Factory\SearchFactory',
+            'Auth\Service\User\Save'   => 'Auth\Service\User\Factory\SaveFactory',
+            'Auth\Service\Acl\Builder' => 'Auth\Service\Acl\Factory\BuilderFactory',
+        ),
+        'abstract_factories' => array(
+            'Zend\Db\Adapter\AdapterAbstractServiceFactory',
         ),
     ),
     'view_helpers' => array(
@@ -76,6 +79,7 @@ return array(
             'Auth\Controller\Auth.index',
             'Auth\Controller\Auth.login',
             'Auth\Controller\Auth.logout',
+            'Auth\Controller\User.index',
         ),
         'privilege' => array(
             'guest' => array(

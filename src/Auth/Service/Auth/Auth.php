@@ -1,14 +1,21 @@
 <?php
 
-namespace Auth\Service;
+namespace Auth\Service\Auth;
 
-use Core\Service\Service;
+use Auth\Service\Acl\Builder;
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\Db\Adapter\Adapter;
+use Zend\Session\Container;
 
-class Auth implements ServiceManagerAwareInterface
+/**
+ * DESCRIPTION
+ * PHP Version: 7.0.6
+ * Class Auth
+ * @package Auth\Service\Auth
+ * @author Renan Liberato <renan.libsantana@gmail.com>
+ */
+class Auth
 {
     /**
      * Auth database adapter.
@@ -18,39 +25,26 @@ class Auth implements ServiceManagerAwareInterface
     private $dbAdapter;
 
     /**
-     * Allow Auth class to work with services.
-     * 
-     * @var ServiceManager
+     * @var Container
      */
-    protected $serviceManager;
+    private $session;
 
     /**
-     * Initialize Auth database adapter.
-     * 
-     * @param \Zend\Db\Adapter\Adapter $dbAdapter
+     * @var Builder
      */
-    public function __construct($dbAdapter = null)
+    private $builder;
+
+    /**
+     * Auth constructor.
+     * @param Adapter $dbAdapter
+     * @param Container $session
+     * @param Builder $builder
+     */
+    public function __construct(Adapter $dbAdapter, Container $session, Builder $builder)
     {
         $this->dbAdapter = $dbAdapter;
-    }
-
-    /**
-     * @param ServiceManager $serviceManager
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
-        //return $this;
-    }
-
-    /**
-     * Retrieve serviceManager instance
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceManager()
-    {
-        return $this->serviceManager;
+        $this->session   = $session;
+        $this->builder   = $builder;
     }
 
     /**
@@ -81,8 +75,7 @@ class Auth implements ServiceManagerAwareInterface
             return false;
         }
 
-        $session = $this->getServiceManager()->get('Auth\Session');
-        $session->offsetSet('user', $authAdapter->getResultRowObject(null,array('password')));
+        $this->session->offsetSet('user', $authAdapter->getResultRowObject(null,array('password')));
 
         return true;
     }
@@ -95,8 +88,7 @@ class Auth implements ServiceManagerAwareInterface
     public function logout()
     {
         $auth = new AuthenticationService();
-        $session = $this->getServiceManager()->get('Auth\Session');
-        $session->offsetUnset('user');
+        $this->session->offsetUnset('user');
         $auth->clearIdentity();
 
         return true;
@@ -114,13 +106,12 @@ class Auth implements ServiceManagerAwareInterface
         $auth = new AuthenticationService();
         $role = 'guest';
         if ($auth->hasIdentity()) {
-            $session = $this->getServiceManager()->get('Auth\Session');
-            $user = $session->offsetGet('user');
+            $user = $this->session->offsetGet('user');
             $role = $user->role;
         }
 
         $resource = $controllerName . '.' . $actionName;
-        $acl = $this->getServiceManager()->get('Core\Acl\Builder')->build();
+        $acl = $this->builder->build();
         if ($acl->isAllowed($role, $resource)) {
             return true;
         }

@@ -2,45 +2,24 @@
 
 namespace Auth;
 
+use Auth\Service\Auth\Factory\AuthListenerFactory;
+
 class Module
 {
+    /**
+     * {@inheritDoc}
+     */
     public function onBootstrap($e)
     {
-        /** @var \Zend\ModuleManager\ModuleManager $moduleManager */
-        $moduleManager = $e->getApplication()->getServiceManager()->get('modulemanager');
-        /** @var \Zend\EventManager\SharedEventManager $sharedEvents */
-        $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+        $eventManager = $e->getTarget()->getEventManager();
 
-        //adiciona eventos ao módulo
-        $sharedEvents->attach('Zend\Mvc\Controller\AbstractActionController', \Zend\Mvc\MvcEvent::EVENT_DISPATCH, array($this, 'mvcPreDispatch'), 100);
+        $authListener = new AuthListenerFactory();
+        $authListener->attach($eventManager);
     }
 
     /**
-     * Verifica se precisa fazer a autorização do acesso
-     * @param  MvcEvent $event Evento
-     * @return boolean
+     * {@inheritDoc}
      */
-    public function mvcPreDispatch($event)
-    {
-        $di = $event->getTarget()->getServiceLocator();
-        $routeMatch = $event->getRouteMatch();
-        $moduleName = $routeMatch->getParam('module');
-        $controllerName = $routeMatch->getParam('controller');
-        $actionName = $routeMatch->getParam('action');
-
-        $authService = $di->get('Auth\Service\Auth');
-
-        if (!$authService->authorize($controllerName, $actionName)) {
-
-            $controller = $event->getTarget();
-            $controller->flashMessenger()->addErrorMessage('Acesso não autorizado');
-
-            return $controller->redirect()->toUrl('/application/index/index');
-        }
-
-        return true;
-    }
-
     public function getAutoloaderConfig()
     {
         return array(
@@ -55,6 +34,9 @@ class Module
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
