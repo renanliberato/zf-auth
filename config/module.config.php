@@ -9,11 +9,8 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter'
-            => 'Zend\Db\Adapter\AdapterServiceFactory',
-            'Auth\Session' => function($sm) {
-                return new Zend\Session\Container('Auth');
-            },
+            'Zend\Db\Adapter\Adapter'  => 'Zend\Db\Adapter\AdapterServiceFactory',
+            'Auth\Session'             => 'Auth\Service\Session\Factory\SessionFactory',
             'Auth\Service\Auth\Auth'   => 'Auth\Service\Auth\Factory\AuthFactory',
             'Auth\Service\User\Search' => 'Auth\Service\User\Factory\SearchFactory',
             'Auth\Service\User\Save'   => 'Auth\Service\User\Factory\SaveFactory',
