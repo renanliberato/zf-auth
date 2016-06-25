@@ -14,6 +14,8 @@ use Zend\Db\TableGateway\TableGateway;
 
 class Search
 {
+    const MODEL = 'Auth\Model\User';
+
     /**
      * @var \Zend\Db\Adapter\Adapter
      */
@@ -29,21 +31,25 @@ class Search
         $this->dbAdapter = $dbAdapter;
     }
 
-    public function fetchAll($columns = null, $where = null, $order = null)
+    public function fetchAll($where = null, $order = null)
     {
         $model = new User();
-        $tableGateway = new TableGateway('\Auth\Model\User', $this->dbAdapter);
+        $tableGateway = new TableGateway(self::MODEL, $this->dbAdapter);
 
         $select = new Select();
-        if ($columns)
-            $select->columns($columns);
-        $select->from('Auth\Model\User');
+
+        $select->columns($this->columns);
+
+        $select->from(self::MODEL);
+
         if($where)
             $select->where($where);
+
         if($order)
             $select->order($order);
 
         $fetchAll = $tableGateway->selectWith($select);
+
         $model->setData($fetchAll);
 
         return $model->getData();
