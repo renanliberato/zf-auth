@@ -27,7 +27,7 @@ class SaveFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $dbAdapter = $serviceLocator->get('dbAuth');
+        $dbAdapter = $serviceLocator->get('authAdapter');
 
         return new Save($dbAdapter);
     }

@@ -27,7 +27,7 @@ class AuthFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $dbAdapter = $serviceLocator->get('dbAuth');
+        $dbAdapter = $serviceLocator->get('authAdapter');
         $session   = $serviceLocator->get('Auth\Session');
         $builder   = $serviceLocator->get('Auth\Service\Acl\Builder');
 

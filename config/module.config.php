@@ -90,9 +90,9 @@ return array(
     ),
     'db' => array(
         'adapters' => array(
-            'dbAuth' => array(
-                'driver' => 'Pdo',
-                'dsn' => 'mysql:dbname=auth;host=localhost',
+            'authAdapter' => array(
+                'driver'  => 'Pdo',
+                'dsn'     => 'mysql:dbname=auth;host=localhost',
                 'driver_options' => array(
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'',
                 ),
