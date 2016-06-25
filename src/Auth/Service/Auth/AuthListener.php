@@ -3,7 +3,7 @@
  * @author Renan Liberato <renan.libsantana@gmail.com>
  */
 
-namespace Auth\Service\Auth\Factory;
+namespace Auth\Service\Auth;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
@@ -15,7 +15,7 @@ use Zend\Mvc\MvcEvent;
  * @package Auth\Service\Auth\Factory
  * @author Renan Liberato <renan.libsantana@gmail.com>
  */
-class AuthListenerFactory
+class AuthListener
 {
     /**
      * @var \Zend\Stdlib\CallbackHandler[]

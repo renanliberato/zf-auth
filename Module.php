@@ -2,18 +2,19 @@
 
 namespace Auth;
 
-use Auth\Service\Auth\Factory\AuthListenerFactory;
+use Auth\Service\Auth\AuthListener;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
     /**
      * {@inheritDoc}
      */
-    public function onBootstrap($e)
+    public function onBootstrap(MvcEvent $e)
     {
         $eventManager = $e->getTarget()->getEventManager();
 
-        $authListener = new AuthListenerFactory();
+        $authListener = new AuthListener();
         $authListener->attach($eventManager);
     }
 
