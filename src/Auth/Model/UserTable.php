@@ -5,6 +5,7 @@
 
 namespace Auth\Service\TableGateway;
 
+use Auth\Model\User;
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -17,8 +18,6 @@ use Zend\Db\TableGateway\TableGateway;
  */
 class UserTable
 {
-    const MODEL = 'Auth\Model\User';
-
     /**
      * @var TableGateway
      */
@@ -33,20 +32,24 @@ class UserTable
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll($where = null, $order = null)
+    /**
+     * @param array $where
+     * @param string $order
+     * @return mixed
+     */
+    public function fetchAll($where = array(), $order = '')
     {
         $select = new Select();
 
-        $select->from(self::MODEL);
+        $select->from(User::class);
 
-        if($where)
-            $select->where($where);
+        $select->where($where);
 
-        if($order)
-            $select->order($order);
+        $select->order($order);
 
         $fetchAll = $this->tableGateway->selectWith($select);
-        var_dump($fetchAll);
+        var_dump($fetchAll);die;
+
         return $fetchAll;
 
     }
