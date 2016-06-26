@@ -79,9 +79,7 @@ class UserTable
      */
     public function insert($data = array())
     {
-        $data = array('id' => 0, 'email' => 'renan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.com', 'password' => 'teste01', 'role' => 'user');
-        $model  = new User();
-        $filter = $model->getInputFilter();
+        $filter = (new User())->getInputFilter();
 
         $isValid = $filter->setData($data)
                           ->setValidationGroup(InputFilterInterface::VALIDATE_ALL)
