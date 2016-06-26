@@ -8,7 +8,7 @@
 
 namespace Auth\Controller;
 
-use Auth\Service\User\Search as Searcher;
+use Auth\Model\UserTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -24,16 +24,16 @@ class UserController extends AbstractActionController
     /**
      * @var Searcher
      */
-    protected $searcher;
+    protected $tableGateway;
 
     /**
      * UserController constructor.
      * 
      * @param Searcher $searcher
      */
-    public function __construct(Searcher $searcher)
+    public function __construct(UserTable $tableGateway)
     {
-        $this->searcher = $searcher;
+        $this->tableGateway = $tableGateway;
     }
 
     /**
@@ -41,6 +41,8 @@ class UserController extends AbstractActionController
      */
     public function indexAction()
     {
+        $resultSet = $this->tableGateway->fetchAll();
+
         return new ViewModel();
     }
 
