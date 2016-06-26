@@ -6,6 +6,7 @@
 namespace Auth\Controller\Factory;
 
 use Auth\Controller\UserController;
+use Auth\Model\UserTable;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -28,8 +29,8 @@ class UserControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $searcher = $serviceLocator->getServiceLocator()->get('Auth\Service\User\Search');
+        $tableGateway = $serviceLocator->getServiceLocator()->get('Auth\Model\UserTable');
 
-        return new UserController($searcher);
+        return new UserController($tableGateway);
     }
 }
