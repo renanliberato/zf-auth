@@ -24,7 +24,7 @@ class AuthController extends AbstractActionController
     /**
      * AuthController constructor.
      *
-     * @param Authenticator $authService
+     * @param Authenticator $authenticator
      */
     public function __construct(Authenticator $authenticator)
     {
