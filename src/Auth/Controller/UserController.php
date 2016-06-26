@@ -10,7 +10,7 @@ namespace Auth\Controller;
 
 use Auth\Model\UserTable;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 /**
  * DESCRIPTION
@@ -22,14 +22,14 @@ use Zend\View\Model\ViewModel;
 class UserController extends AbstractActionController
 {
     /**
-     * @var Searcher
+     * @var UserTable
      */
     protected $tableGateway;
 
     /**
      * UserController constructor.
      * 
-     * @param Searcher $searcher
+     * @param UserTable $tableGateway
      */
     public function __construct(UserTable $tableGateway)
     {
@@ -37,20 +37,30 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * @return ViewModel
+     * @return JsonModel
      */
     public function indexAction()
     {
-        $resultSet = $this->tableGateway->fetchAll();
-
-        return new ViewModel();
+        return new JsonModel($this->tableGateway->fetchAll());
     }
 
     /**
-     * @return ViewModel
+     * @return JsonModel
      */
     public function newAction()
     {
-        return new ViewModel();
+        if (!$this->getRequest()->isPost()) {
+
+            return new JsonModel(array(
+                'status'   => 'error',
+                'messages' => array(
+                    'Acesso inválido'
+                ),
+            ));
+        }
+
+        $data = $this->getRequest()->getPost();
+
+        return new JsonModel($this->tableGateway->insert($data));
     }
 }
