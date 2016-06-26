@@ -16,10 +16,7 @@ use Zend\InputFilter\InputFilterInterface;
  */
 class User implements InputFilterAwareInterface
 {
-    /**
-     * @var string
-     */
-    protected $tableName = 'user';
+    const TABLE = 'user';
 
     /**
      * @var int
@@ -148,18 +145,14 @@ class User implements InputFilterAwareInterface
         return $this->inputFilter;
     }
 
-
-
     /**
-     * Set all entity data based in an array with data
-     *
-     * @param array $data
-     * @return void
+     * @param $data
      */
-    public function setData($data)
+    public function exchangeArray($data)
     {
         foreach($data as $key => $value) {
-            $this->__set($key, $value);
+            $this->{$key} = $value;
+
         }
     }
 
@@ -173,6 +166,6 @@ class User implements InputFilterAwareInterface
         $data = get_object_vars($this);
         unset($data['inputFilter']);
         unset($data['tableName']);
-        return array_filter($data);
+        return $data;
     }
 }
