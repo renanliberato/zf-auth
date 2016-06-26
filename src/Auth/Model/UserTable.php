@@ -3,9 +3,8 @@
  * @author Renan Liberato <renan.libsantana@gmail.com>
  */
 
-namespace Auth\Service\TableGateway;
+namespace Auth\Model;
 
-use Auth\Model\User;
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -37,20 +36,19 @@ class UserTable
      * @param string $order
      * @return mixed
      */
-    public function fetchAll($where = array(), $order = '')
+    public function fetchAll($where = array(), $order = 'id ASC')
     {
         $select = new Select();
 
-        $select->from(User::class);
+        $select->from(User::TABLE);
 
         $select->where($where);
 
         $select->order($order);
 
-        $fetchAll = $this->tableGateway->selectWith($select);
-        var_dump($fetchAll);die;
+        $resultSet = $this->tableGateway->selectWith($select);
 
-        return $fetchAll;
+        return $resultSet;
 
     }
     
