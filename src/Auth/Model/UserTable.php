@@ -7,6 +7,7 @@ namespace Auth\Model;
 
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * DESCRIPTION
@@ -34,7 +35,7 @@ class UserTable
     /**
      * @param array $where
      * @param string $order
-     * @return mixed
+     * @return PlainObject
      */
     public function fetchAll($where = array(), $order = 'id ASC')
     {
@@ -46,12 +47,70 @@ class UserTable
 
         $select->order($order);
 
-        $resultSet = $this->tableGateway->selectWith($select);
+        try {
+            $resultSet = $this->tableGateway->selectWith($select);
 
-        return $resultSet;
+            $fetchAll = array();
+            foreach ($resultSet as $result) {
+                $fetchAll[] = $result->getData();
+            }
 
+            return array(
+                'status'   => 'success',
+                'content'  => $fetchAll,
+                'messages' => 'Ação realizada com sucesso'
+            );
+
+        } catch (\Exception $exc) {
+
+            return array(
+                'status'   => 'error',
+                'messages' => array(
+                    'Não foi possível realizar a ação desejada'
+                )
+            );
+
+        }
     }
-    
+
+    /**
+     * @param array $data
+     * @return PlainObject
+     */
+    public function insert($data = array())
+    {
+        $data = array('id' => 0, 'email' => 'renan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.comrenan_santana39@hotmail.com', 'password' => 'teste01', 'role' => 'user');
+        $model  = new User();
+        $filter = $model->getInputFilter();
+
+        $isValid = $filter->setData($data)
+                          ->setValidationGroup(InputFilterInterface::VALIDATE_ALL)
+                          ->isValid();
+
+        if (!$isValid) {
+            return array(
+                'status'   => 'error',
+                'messages' => $filter->getMessages()
+            );
+
+        }
+
+        try {
+            $this->tableGateway->insert($data);
+
+            return array(
+                'status' => 'success',
+            );
+
+        } catch (\Exception $exc) {
+            return array(
+                'status'   => 'error',
+                'messages' => array(
+                    'Não foi possível realizar a ação desejada'
+                )
+            );
+        }
+    }
     
 
 }
