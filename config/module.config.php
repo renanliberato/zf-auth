@@ -3,18 +3,19 @@
 return array(
     'controllers' => array( //add module controllers
         'factories' => array(
-            'Auth\Controller\Auth' => 'Auth\Controller\Factory\AuthControllerFactory',
+            'Auth\Controller\Auth' => Auth\Controller\Factory\AuthControllerFactory::class,
             'Auth\Controller\User' => 'Auth\Controller\Factory\UserControllerFactory',
         ),
     ),
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter'  => 'Zend\Db\Adapter\AdapterServiceFactory',
-            'Auth\Session'             => 'Auth\Service\Session\Factory\SessionFactory',
-            'Auth\Service\Auth\Auth'   => 'Auth\Service\Auth\Factory\AuthFactory',
-            'Auth\Service\User\Search' => 'Auth\Service\User\Factory\SearchFactory',
-            'Auth\Service\User\Save'   => 'Auth\Service\User\Factory\SaveFactory',
-            'Auth\Service\Acl\Builder' => 'Auth\Service\Acl\Factory\BuilderFactory',
+            Auth\Model\UserTable::class     => Auth\Model\Factory\UserTableFactory::class,
+            Auth\Service\Acl\Builder::class => Auth\Service\Acl\Factory\BuilderFactory::class,
+            Auth\Service\Auth\Auth::class   => Auth\Service\Auth\Factory\AuthFactory::class,
+            Auth\Service\User\Save::class   => Auth\Service\User\Factory\SaveFactory::class,
+            Auth\Service\User\Search::class => Auth\Service\User\Factory\SearchFactory::class,
+            'Auth\Session'                  => Auth\Service\Session\Factory\SessionFactory::class,
+            'Zend\Db\Adapter\Adapter'       => 'Zend\Db\Adapter\AdapterServiceFactory',
         ),
         'abstract_factories' => array(
             'Zend\Db\Adapter\AdapterAbstractServiceFactory',
@@ -22,7 +23,7 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'authSession' => 'Auth\View\Helper\Session',
+            'authSession' => Auth\View\Helper\Session::class,
         ),
     ),
     'router' => array(
@@ -77,6 +78,7 @@ return array(
             'Auth\Controller\Auth.login',
             'Auth\Controller\Auth.logout',
             'Auth\Controller\User.index',
+            'Auth\Controller\User.new',
         ),
         'privilege' => array(
             'guest' => array(
@@ -84,6 +86,12 @@ return array(
                     'Auth\Controller\Auth.index',
                     'Auth\Controller\Auth.login',
                     'Auth\Controller\Auth.logout',
+                ),
+            ),
+            'user' => array(
+                'allow' => array(
+                    'Auth\Controller\User.index',
+                    'Auth\Controller\User.new',
                 ),
             ),
         ),
