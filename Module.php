@@ -5,6 +5,13 @@ namespace Auth;
 use Auth\Service\Auth\AuthListener;
 use Zend\Mvc\MvcEvent;
 
+/**
+ * DESCRIPTION
+ * PHP Version: 7.0.6
+ * Class Module
+ * @package Auth
+ * @author Renan Liberato <renan.libsantana@gmail.com>
+ */
 class Module
 {
     /**
