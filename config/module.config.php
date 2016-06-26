@@ -67,6 +67,9 @@ return array(
         'template_path_stack' => array(
             'auth' => __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
     'acl' => array(
         'roles' => array(
