@@ -36,16 +36,6 @@ class User implements InputFilterAwareInterface
     /**
      * @var string
      */
-    protected $name;
-
-    /**
-     * @var int
-     */
-    protected $valid;
-
-    /**
-     * @var string
-     */
     protected $role;
 
     /**
@@ -73,69 +63,56 @@ class User implements InputFilterAwareInterface
             $factory     = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'id',
+                'name'     => 'id',
                 'required' => true,
-                'filters' => array (
-                    'name' => 'Int',
+                'filters'  => array(
+                    array('name' => 'Int'),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'email',
+                'name'     => 'email',
                 'required' => true,
-                'filters' => array (
+                'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
                 'validators' => array(
-                    'name' => 'StringLength',
-                    'options' => array(
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 100,
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
                     ),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'password',
+                'name'     => 'password',
                 'required' => true,
-                'filters' => array (
+                'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'name',
+                'name'     => 'role',
                 'required' => true,
-                'filters' => array (
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'valid',
-                'required' => true,
-                'filters' => array (
-                    'name' => 'Int',
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'role',
-                'required' => true,
-                'filters' => array (
+                'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
                 'validators' => array(
-                    'name' => 'StringLength',
-                    'options' => array(
-                        'encoding' => 'UTF-8',
-                        'min' => 1,
-                        'max' => 20,
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 20,
+                        ),
                     ),
                 ),
             )));
