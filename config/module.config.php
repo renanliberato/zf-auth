@@ -11,7 +11,7 @@ return array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter'  => 'Zend\Db\Adapter\AdapterServiceFactory',
             'Auth\Session'             => 'Auth\Service\Session\Factory\SessionFactory',
-            'Auth\Service\Auth\Auth'   => 'Auth\Service\Auth\Factory\AuthFactory',
+            'Auth\Service\Auth\Auth'   => Auth\Service\Auth\Factory\AuthFactory::class,
             'Auth\Service\User\Search' => 'Auth\Service\User\Factory\SearchFactory',
             'Auth\Service\User\Save'   => 'Auth\Service\User\Factory\SaveFactory',
             'Auth\Service\Acl\Builder' => 'Auth\Service\Acl\Factory\BuilderFactory',
@@ -84,17 +84,6 @@ return array(
                     'Auth\Controller\Auth.index',
                     'Auth\Controller\Auth.login',
                     'Auth\Controller\Auth.logout',
-                ),
-            ),
-        ),
-    ),
-    'db' => array(
-        'adapters' => array(
-            'authAdapter' => array(
-                'driver'  => 'Pdo',
-                'dsn'     => 'mysql:dbname=auth;host=localhost',
-                'driver_options' => array(
-                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'',
                 ),
             ),
         ),
