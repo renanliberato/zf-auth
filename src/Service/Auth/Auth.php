@@ -5,7 +5,9 @@ namespace Auth\Service\Auth;
 use Auth\Service\Acl\Builder;
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
+use Zend\Crypt\Password\Bcrypt;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Session\Container;
 
 /**
@@ -56,21 +58,34 @@ class Auth
      */
     public function authenticate($params)
     {
-        //to change
-        $password = md5($params['password']);
-        
-        $auth = new AuthenticationService();
+        $tablegateway = new TableGateway('user', $this->dbAdapter);
 
+        $resultSet = $tablegateway->select(array('email' => $params['email']));
+
+        if ($resultSet == 0) {
+            return false;
+        }
+
+        $bcrypt      = new Bcrypt();
+        $auth        = new AuthenticationService();
         $authAdapter = new AuthAdapter($this->dbAdapter);
+
+
+        $searchedUser = $resultSet->current();
+        $check        = $bcrypt->verify($params['password'], $searchedUser['password']);
+        if (!$check) {
+            return false;
+        }
+
         $authAdapter
             ->setTableName('user')
             ->setIdentityColumn('email')
             ->setCredentialColumn('password')
-            ->setIdentity($params['email'])
-            ->setCredential($password);
+            ->setIdentity($searchedUser['email'])
+            ->setCredential($searchedUser['password']);
             
         $result = $auth->authenticate($authAdapter);
-        
+
         if(!$result->isValid()){
             return false;
         }

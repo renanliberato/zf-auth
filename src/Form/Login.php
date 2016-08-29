@@ -20,7 +20,7 @@ class Login extends Form
     {
         parent::__construct('login');
         $this->setAttribute('method', 'post');
-        $this->setAttribute('action','/auth/auth/login');
+        $this->setAttribute('action', '/auth/login');
 
         $this->add(array(
             'name' => 'email',
@@ -34,8 +34,8 @@ class Login extends Form
         $this->add(array(
             'name' => 'password',
             'attributes' => array(
-                'type' => 'password',
-                'class' => 'form-control',
+                'type'        => 'password',
+                'class'       => 'form-control',
                 'placeholder' => 'Password'
             ),
         ));
@@ -43,10 +43,10 @@ class Login extends Form
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type' => 'submit',
-                'value' => 'Entrar',
-                'id' => 'submitbutton',
-                'class' => 'form-control',
+                'type'    => 'submit',
+                'value'   => 'Entrar',
+                'class'   => 'form-control',
+                'id'      => 'submitbutton',
             ),
         ));
 

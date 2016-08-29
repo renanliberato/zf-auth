@@ -1,14 +1,29 @@
 <div class='row'>
-    <div class='col-sm-4 col-sm-offset-4'>
+    <div class='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2'>
         <?= $this->partial('partials/messages/flashMessenger.phtml') ?>
     </div>
 </div>
 <div class='row'>
-    <div id="login" class="col-sm-4 col-sm-offset-4 jumbotron">
+    <div id="login" class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
         <?= $this->form()->openTag($form); ?>
-        <?= $this->formRow($form->get('email')); ?>
-        <?= $this->formRow($form->get('password')); ?>
-        <?= $this->formRow($form->get('submit')); ?>
+        <div class="row">
+            <div id="emaildiv" class="col-xs-10 col-xs-offset-1">
+                <?= $this->formRow($form->get('email')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div id="passworddiv" class="col-xs-10 col-xs-offset-1">
+                <?= $this->formRow($form->get('password')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div id="submitdiv" class="col-sm-5 col-sm-push-1 col-sm-offset-0 col-xs-10 col-xs-offset-1">
+                <?= $this->formRow($form->get('submit')); ?>
+            </div>
+            <div id="submitdiv" class="col-sm-5 col-sm-push-1 col-sm-offset-0 col-xs-10 col-xs-offset-1">
+                <button id="rememberpassword" class="form-control">Esqueci minha senha</button>
+            </div>
+        </div>
         <?= $this->form()->closeTag(); ?>
     </div>
 </div>

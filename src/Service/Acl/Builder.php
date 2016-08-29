@@ -30,7 +30,7 @@ class Builder
     }
 
     /**
-     * Constroi a ACL
+     * Constrói a ACL
      * @return Acl 
      */
     public function build()

@@ -7,6 +7,11 @@
 ##External Resources
 ###[Bootstrap 3](http://getbootstrap.com/getting-started/#download)
 
+### Additionals Zend Framework Components
+ - zend-db
+ - zend-permissions-acl
+ - zend-crypt
+
 ##How to install
 
 - `git clone https://github.com/renanliberato/zf2-auth.git`

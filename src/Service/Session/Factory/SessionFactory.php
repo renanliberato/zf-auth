@@ -5,8 +5,9 @@
 
 namespace Auth\Service\Session\Factory;
 
+use Interop\Container\ContainerInterface;
 use Zend\Session\Container;
-use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -23,7 +24,7 @@ class SessionFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Container(self::CONTAINER_NAME);
     }

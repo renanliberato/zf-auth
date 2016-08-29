@@ -3,9 +3,10 @@
 namespace Auth;
 
 use Auth\Service\Auth\AuthListener;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\MvcEvent;
 
-class Module
+class Module implements ConfigProviderInterface
 {
     /**
      * {@inheritDoc}

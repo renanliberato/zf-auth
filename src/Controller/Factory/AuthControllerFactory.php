@@ -6,7 +6,8 @@
 namespace Auth\Controller\Factory;
 
 use Auth\Controller\AuthController;
-use Zend\ServiceManager\FactoryInterface;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -20,15 +21,20 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class AuthControllerFactory implements FactoryInterface
 {
     /**
-     * Create service
-     *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
-     *
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    * Create an object
+    *
+    * @param  ContainerInterface $container
+    * @param  string             $requestedName
+    * @param  null|array         $options
+    * @return object
+    * @throws ServiceNotFoundException if unable to resolve the service.
+    * @throws ServiceNotCreatedException if an exception is raised when
+    *     creating a service.
+    * @throws ContainerException if any other error occurs
+    */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $authenticator = $serviceLocator->getServiceLocator()->get('Auth\Service\Auth\Auth');
+        $authenticator = $container->get('Auth\Service\Auth\Auth');
 
         return new AuthController($authenticator);
     }

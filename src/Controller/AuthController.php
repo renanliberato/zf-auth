@@ -2,8 +2,9 @@
 
 namespace Auth\Controller;
 
-use Auth\Service\Auth\Auth as Authenticator;
 use Auth\Form\Login;
+use Auth\Model\User;
+use Auth\Service\Auth\Auth as Authenticator;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -22,6 +23,16 @@ class AuthController extends AbstractActionController
     protected $authenticator;
 
     /**
+     * @var Login
+     */
+    protected $form;
+
+    /**
+     * @var User
+     */
+    protected $model;
+
+    /**
      * AuthController constructor.
      *
      * @param Authenticator $authService
@@ -29,6 +40,8 @@ class AuthController extends AbstractActionController
     public function __construct(Authenticator $authenticator)
     {
         $this->authenticator = $authenticator;
+        $this->form          = new Login();
+        $this->model         = new User();
     }
 
     /**
@@ -38,10 +51,8 @@ class AuthController extends AbstractActionController
      */
     public function indexAction()
     {
-        $form = new Login();
-
         return new ViewModel(array(
-            'form' => $form
+            'form' => $this->form
         ));
     }
 
@@ -71,20 +82,30 @@ class AuthController extends AbstractActionController
         }
 
         $data = $request->getPost();
-        $auth = $this->authenticator->authenticate(
-            array(
-                'email' => $data['email'],
-                'password' => $data['password'],
-            )
-        );
-        
-        if(!$auth) {
-            $this->flashMessenger()->addErrorMessage('Usuário ou senha errados!');
+        unset($data['submit']);
+        $this->form->setData($data);
 
-            return $this->redirect()->toUrl('/auth/auth');
+        if ($this->form->isValid()) {
+            $validData = $this->form->getData();
+
+            $auth = $this->authenticator->authenticate(
+                array(
+                    'email'    => $validData['email'],
+                    'password' => $validData['password'],
+                )
+            );
+
+            if(!$auth) {
+                $this->flashMessenger()->addErrorMessage('Usuário ou senha errados!');
+
+                return $this->redirect()->toUrl('/auth');
+            }
+            $this->flashMessenger()->addSuccessMessage('Login efetuado com sucesso!');
+            return  $this->redirect()->toUrl('/auth');
         }
+        $this->flashMessenger()->addErrorMessage('Usuário ou senha errados!');
 
-        return  $this->redirect()->toUrl('/');
+        return $this->redirect()->toUrl('/auth');
     }
 
     /**
@@ -96,6 +117,6 @@ class AuthController extends AbstractActionController
     {
         $this->authenticator->logout();
 
-        return $this->redirect()->toUrl('/');
+        return $this->redirect()->toUrl('/auth');
     }
 }

@@ -66,7 +66,7 @@ class AuthListener
             $controller = $e->getTarget();
             $controller->flashMessenger()->addErrorMessage('Acesso não autorizado');
 
-            return $controller->redirect()->toUrl('/application/index/index');
+            return $controller->redirect()->toUrl('/');
         }
 
         return true;
