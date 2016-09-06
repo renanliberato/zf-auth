@@ -73,6 +73,7 @@ class AuthController extends AbstractActionController
      */
     public function loginAction()
     {
+        throw new \Exception('teste', 300);
         $request = $this->getRequest();
         
         if(!$request->isPost()) {
