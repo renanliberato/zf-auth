@@ -1,7 +1,7 @@
-# zf2-auth
+# zf3-auth
 
 ##Description
-<p>This is an Authentication module create on top of Zend Framework 2.</p>
+<p>This is an Authentication module create on top of Zend Framework 3.</p>
 <p>It's objective is to integrate all configuration dependencies inside the module, not needing to do aditional configurations inside global.php or Application's module.config.</p>
 
 ##External Resources
@@ -14,7 +14,7 @@
 
 ##How to install
 
-- `git clone https://github.com/renanliberato/zf2-auth.git`
+- `git clone https://github.com/renanliberato/zf-auth.git`
 
 ###global.php
 Implementation to use more than one database.
